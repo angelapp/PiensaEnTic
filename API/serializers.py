@@ -33,9 +33,9 @@ class UserSerializer(serializers.Serializer):
 	)
 	nick_name = serializers.CharField()
 	email = serializers.EmailField()
-	password = serializers.CharField()
-	gender = serializers.IntegerField()
-	birthdate = serializers.DateField(
+	password = serializers.CharField(default = 'user_doesnt_has_psw')
+	gender = serializers.IntegerField(default = 3)
+	birthdate = serializers.CharField(
 		required = False,
 	)
 	terms_conditions_accepted = serializers.BooleanField(

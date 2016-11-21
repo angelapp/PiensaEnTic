@@ -83,7 +83,6 @@ class UserViewSet(APIView):
 		serializer.is_valid(raise_exception = True)
 
 		first_name = serializer.validated_data['first_name']
-		last_name = serializer.validated_data['last_name']
 		nick_name = serializer.validated_data['nick_name']
 		email = serializer.validated_data['email']
 		password = serializer.validated_data['password']
@@ -96,7 +95,6 @@ class UserViewSet(APIView):
 		user = User(
 			username = email.lower(),
 			first_name = first_name,
-			last_name = last_name,
 			email = email,
 			date_joined = datetime.now(),
 		)

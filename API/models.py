@@ -32,7 +32,8 @@ class UserProfile(models.Model):
 		null = True,
 	)
 
-	birthdate = models.DateField(
+	birthdate = models.CharField(
+		max_length = 10,
 		verbose_name = u'Fecha de nacimiento',
 		blank = True,
 		null = True,
@@ -42,6 +43,9 @@ class UserProfile(models.Model):
 		default = False,
 		verbose_name = u'Acepta terminos y condiciones'
 	)
+
+	def __unicode__(self):
+		return self.user.email
 
 
 class Activities(models.Model):
@@ -56,6 +60,9 @@ class Activities(models.Model):
 		null = False,
 		blank = False,
 	)
+
+	def __unicode__(self):
+		return self.activity_name
 
 class ActivitiesRealized(models.Model):
 
@@ -80,6 +87,9 @@ class ActivitiesRealized(models.Model):
 		default = False,
 		verbose_name = u'Se ejecuto la actividad'
 	)
+
+	def __unicode__(self):
+		return self.activity_executed.activity_name
 
 
 
