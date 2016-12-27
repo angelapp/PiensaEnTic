@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
 
 from django.conf import settings
@@ -228,8 +230,8 @@ class PasswordRecovery(APIView):
 
 		user = get_object_or_404(User, email = username.lower())
 		name = user.first_name 
-		subject = "Piensa en TIC - Recuperacion de contrasena"
-		message = u'Hola ' + name + u', tu contrasena de Piensa en TIC es ' + password 
+		subject = u'Piensa en TIC - Recuperación de contraseña'
+		message = u'Hola ' + name + u', tu contraseña de Piensa en TIC es ' + password 
 		#message = render_to_string('API/password_recovery.html',{'key':password,'name': name})
 		msg = EmailMultiAlternatives(subject,message,'info@piensaentic.co',[user.email])
 		msg.attach_alternative(message,"text/html")
