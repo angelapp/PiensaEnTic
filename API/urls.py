@@ -10,4 +10,8 @@ urlpatterns = [
 	url(r'^activity-register/$', views.ActivityRegister.as_view(),
 		name = 'activity_registration',
 	),
+
+	url(r'^password-recovery/$', views.PasswordRecovery.as_view(),
+		name = 'password-recovery',
+	),
 ]

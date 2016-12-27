@@ -4,6 +4,8 @@ from django.conf import settings
 
 from django.shortcuts import get_object_or_404
 from django.http import Http404
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 from rest_framework import parsers, renderers
 from rest_framework import serializers, exceptions
@@ -193,7 +195,52 @@ class ActivityRegister(APIView):
 		
 
 
+class PasswordRecovery(APIView):
+	
+	"""
+		Class to send a email with the password to the user
+		
+		ROOT+/api/password /recovery/
 
+		user_mail = CharField() the user_mail, it has to be registered previously
+		password = CharField() the user paswword
+		
+		Example JSON Post:
+
+		{
+		 "user_mail" : "example@example.com",
+		 "password" : "xscfsdklfj"
+		}
+
+	"""
+
+	def post(self, request):
+		api_key = request.META.get('HTTP_APIID')
+
+		if not api_key == settings.API_KEY:
+			raise Http404
+
+		username = request.data.get('user_mail')
+		password = request.data.get('password')
+
+		if not User.objects.filter(email = username.lower()):
+			raise serializers.ValidationError("User not exists")
+
+		user = get_object_or_404(User, email = username.lower())
+		name = user.first_name 
+		subject = "Piensa en TIC - Recuperacion de contrasena"
+		message = u'Hola ' + name + u', tu contrasena de Piensa en TIC es ' + password 
+		#message = render_to_string('API/password_recovery.html',{'key':password,'name': name})
+		msg = EmailMultiAlternatives(subject,message,'info@piensaentic.co',[user.email])
+		msg.attach_alternative(message,"text/html")
+		msg.send()
+
+
+		content = {
+			'sent' : u'OK',
+		}
+
+		return Response(content)
 		
 		
 
