@@ -231,8 +231,8 @@ class PasswordRecovery(APIView):
 		user = get_object_or_404(User, email = username.lower())
 		name = user.first_name 
 		subject = u'Piensa en TIC - Recuperación de contraseña'
-		message = u'Hola ' + name + u', tu contraseña de Piensa en TIC es ' + password 
-		#message = render_to_string('API/password_recovery.html',{'key':password,'name': name})
+		#message = u'Hola ' + name + u', tu contraseña de Piensa en TIC es ' + password 
+		message = render_to_string('API/plantilla.html',{'key':password,'name': name})
 		msg = EmailMultiAlternatives(subject,message,'info@piensaentic.co',[user.email])
 		msg.attach_alternative(message,"text/html")
 		msg.send()
